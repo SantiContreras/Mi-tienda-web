@@ -10,7 +10,7 @@
     <body> 
        
         <div class="d-flex">
-            <div class="col-sm-4">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <form action="Controlador?menu=Empleado" method="POST">
@@ -40,7 +40,7 @@
                     </div>                         
                 </div>
             </div>                     
-            <div class="col-sm-10">
+            <div class="col-md-10">
                 <div class="card">
                     <div class="card-body">
                         <table class="table table-hover">

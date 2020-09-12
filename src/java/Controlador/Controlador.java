@@ -85,7 +85,11 @@ public class Controlador extends HttpServlet {
                     edao.actualizar(em);
                     request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
                     break;
-                case "eliminar" :
+                case "Delete" :
+                    ide=Integer.parseInt(request.getParameter("id"));
+                    edao.delete(ide);
+                    request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                    
                 break;
                 
                 default: 
