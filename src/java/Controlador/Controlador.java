@@ -5,10 +5,15 @@
  */
 package Controlador;
 
+import Modelo.Cliente;
+import Modelo.ClienteDAO;
 import Modelo.Empleado;
 import Modelo.EmpleadoDAO;
+import Modelo.Producto;
+import Modelo.ProductoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.Integer.parseInt;
 import static java.nio.file.Files.list;
 import static java.util.Collections.list;
 import java.util.List;
@@ -22,10 +27,16 @@ import javax.servlet.http.HttpServletResponse;
  * @author santi
  */
 public class Controlador extends HttpServlet {
-        Empleado em = new Empleado();
-        EmpleadoDAO edao = new EmpleadoDAO();
-        
-        int ide;
+
+    Empleado em = new Empleado();
+    EmpleadoDAO edao = new EmpleadoDAO();
+    Cliente cli = new Cliente();
+    ClienteDAO clidao = new ClienteDAO();
+    Producto pro = new Producto();
+    ProductoDAO pdao = new ProductoDAO();
+
+    int ide;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,17 +50,17 @@ public class Controlador extends HttpServlet {
             throws ServletException, IOException {
         String menu = request.getParameter("menu");
         String accion = request.getParameter("accion");
-        if(menu.equals("Principal")){   
-                request.getRequestDispatcher("Principal.jsp").forward(request, response);
+        if (menu.equals("Principal")) {
+            request.getRequestDispatcher("Principal.jsp").forward(request, response);
         }
-        
-        if(menu.equals("Empleado")){ 
+
+        if (menu.equals("Empleado")) {
             switch (accion) {
-                case "Listar" :
+                case "Listar":
                     List lista = edao.listar();
                     request.setAttribute("empleados", lista);
                     break;
-                case "Agregar" :
+                case "Agregar":
                     String dni = request.getParameter("txtDni");
                     String nom = request.getParameter("txtNombres");
                     String tel = request.getParameter("txtTel");
@@ -64,12 +75,12 @@ public class Controlador extends HttpServlet {
                     request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
                     break;
                 case "Editar":
-                    ide = Integer.parseInt(request.getParameter("id"));
-                    Empleado e = edao.ListarId(ide);
+                    ide = Integer.parseInt(request.getParameter("id")); //toma el valor de la ide del empleado
+                    Empleado e = edao.ListarId(ide); // a la variable de tipo empleado 
                     request.setAttribute("empleado", e);
                     request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
                     break;
-                
+
                 case "Actualizar":
                     String dni1 = request.getParameter("txtDni");
                     String nom1 = request.getParameter("txtNombres");
@@ -85,37 +96,45 @@ public class Controlador extends HttpServlet {
                     edao.actualizar(em);
                     request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
                     break;
-                case "Delete" :
-                    ide=Integer.parseInt(request.getParameter("id"));
-                    edao.delete(ide);
+                case "Delete":
+                    ide = Integer.parseInt(request.getParameter("id")); // toma el valor ide del empleado cuando presiona el boton borrar, 
+                    edao.delete(ide); // metodo detele de el empleadoDAO registrado
                     request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-                    
-                break;
-                
-                default: 
-                   throw  new AssertionError();
+
+                    break;
+
+                default:
+                    throw new AssertionError();
             }
-                request.getRequestDispatcher("Empleado.jsp").forward(request, response);
-            
-        
+            request.getRequestDispatcher("Empleado.jsp").forward(request, response);
+
         }
-        if(menu.equals("NuevaVenta")){ 
-                request.getRequestDispatcher("RegistroDeVentas.jsp").forward(request, response);
-            
-        
+        if (menu.equals("NuevaVenta")) {
+            switch (accion) {
+                case "BuscarCliente":
+                    String dni = request.getParameter("CodigoCliente");
+                    cli.setDni(dni);
+                    cli = clidao.buscar(dni);
+                    request.setAttribute("cli", cli); // el controlador recibe  el cliente
+                    break;
+                case "BuscarProducto":
+                    int id = parseInt(request.getParameter("codigoproducto"));
+                    pro = pdao.listarId(id);
+                    
+                    request.setAttribute("pro", pro);
+                    break;
+            }
+            request.getRequestDispatcher("RegistroDeVentas.jsp").forward(request, response);
+
         }
-        if(menu.equals("Producto")){ 
-                request.getRequestDispatcher("Producto.jsp").forward(request, response);
-            
-        
+        if (menu.equals("Producto")) {
+            request.getRequestDispatcher("Producto.jsp").forward(request, response);
+
         }
-        if(menu.equals("Cliente")){ 
-                request.getRequestDispatcher("Clientes.jsp").forward(request, response);
-            
-        
+        if (menu.equals("Cliente")) {
+            request.getRequestDispatcher("Clientes.jsp").forward(request, response);
+
         }
-        
-        
 
     }
 
