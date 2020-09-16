@@ -1,120 +1,132 @@
-<%-- 
-    Document   : RegistroDeVentas
-    Created on : 25/08/2020, 09:45:06
-    Author     : santi
---%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>VENTAS</title>
+        <style>
+            @media print{
+                .parte01,img, .btn, .accion{
+                    display: none;
+                }
+            }
+        </style>
 
-        <!-- Los iconos tipo Solid de Fontawesome-->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
-        <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-
-        <!-- Nuestro css-->
-        <link rel="stylesheet" type="text/css" href="" th:href="@{/css/index.css}">
-        <title>Registro de ventas</title>
     </head>
     <body>
         <div class="d-flex">
-            <!-- Primer columna de la pagina --> 
-            <div class="col-sm-5">
+            <div class="col-lg-5 parte01">
                 <div class="card">
                     <form action="Controlador?menu=NuevaVenta" method="POST">
                         <div class="card-body">
+                            <!--DATOS DEL PRODUCTO-->
                             <div class="form-group">
-                                <label> Datos del cliente</label>
+                                <label>Datos del Cliente</label>
                             </div>
-                            <!-- columna campos codigo cliente y nombre del cliente, boton buscar-->
                             <div class="form-group d-flex">
                                 <div class="col-sm-6 d-flex">
-                                    <input type="text" name="CodigoCliente" value="${cli.getDni()}" class="form-control" placeholder="codigo cliente">
-                                    <button type="submit" name="accion" value="BuscarCliente" class=" btn btn-outline-info">Buscar</button>
-                                </div>
-
+                                    <input type="text" name="codigocliente" value="${c.getDni()}" class="form-control" placeholder="Codigo">
+                                    <button type="submit" name="accion" value="BuscarCliente" class="btn btn-outline-info">Buscar</button>
+                                </div>                           
                                 <div class="col-sm-6">
-                                    <input type="txt" name="nombredelcliente" value="${cli.getNom()}" class=" form-control"> 
-                                </div>
-
+                                    <input type="text" name="nombrescliente" value="${c.getNom()}" placeholder="Datos Cliente" class="form-control">
+                                </div>                           
                             </div>
+                            <!--DATOS DEL PRODUCTO-->
                             <div class="form-group">
-                                <label> Datos del productos</label>
+                                <label>Datos Producto</label>
                             </div>
-                            <!-- columnas campos boton buscar codigo producto nombre producto -->
-                            <div class="form-group d-flex"> 
+                            <div class="form-group d-flex">
                                 <div class="col-sm-6 d-flex">
-                                    <input type="text" name="codigoproducto" class="form-control" placeholder="codigo producto">
-                                    <button type="submit" name="accion" value="BuscarProducto" class=" btn btn-outline-info">Buscar</button>
-                                </div>
-
+                                    <input type="text" name="codigoproducto" value="${pro.getId()}" class="form-control" placeholder="Codigo">
+                                    <button type="submit" name="accion" value="BuscarProducto" class="btn btn-outline-info">Buscar</button>
+                                </div>                           
                                 <div class="col-sm-6">
-                                    <input type="txt" name="nombreProducto"  value="${pro.getNom()}"class=" form-control" placeholder="nombre del producto"> 
-                                </div>
+                                    <input type="text" name="nomproducto" value="${pro.getNom()}" placeholder="Datos Producto" class="form-control">
+                                </div>  
                             </div>
-                            <!--columna campos precio y cantidad-->
-                            <div class="form-group d-flex"> 
+                            <div class="form-group d-flex">
                                 <div class="col-sm-6 d-flex">
-                                    <label>precio  </label>
-                                    <input type="text" name="precio" value="${pro.getPre()}"class="form-control" placeholder="$/ 0.00">
-                                </div>
+                                    <input type="text" name="precio" value="${pro.getPre()}" class="form-control" placeholder="S/.0.00">                                
+                                </div>                           
                                 <div class="col-sm-3">
-                                    <input type="number" name="cant"  class="form-control">
-                                </div>
-
+                                    <input type="number" value="1" name="cant" placeholder="" class="form-control">
+                                </div>  
                                 <div class="col-sm-3">
-                                    <input type="txt" name="stock"  value="${pro.getStock()}"placeholder="stock"class=" form-control"> 
-                                </div>
+                                    <input type="text" name="stock" value="${pro.getStock()}" placeholder="Stock" class="form-control">
+                                </div>  
                             </div>
-                            <!-- boton agregar-->
+                            <!--BOTON AGREGAR PRODUCTO AL REGISTRO-->
                             <div class="form-group">
-                                <input type="submit" name="accion" value="Agregar" class="btn btn-success">
+                                <div class="col-sm">
+                                    <button type="submit" name="accion" value="Agregar" class="btn btn-outline-success">Agregar Producto</button>
+                                </div>
                             </div>
-
                         </div>
                     </form>
                 </div>
             </div>
-            <!-- segunda columna de la pagina, la tabla con los datos -->
             <div class="col-sm-7">
-                <div class="card">
+                <div class="card parte02">                    
                     <div class="card-body">
-
-                        <div class="col-sm-5 ml-auto">
-                            <label>Número de serie</label>
-                            <input type="text" name="NroSerie" class="form-control">
-                        </div>
-
+                        <div class="d-flex ml-auto col-sm-6">
+                            <label class="text-right mt-2 col-sm-6">NRO. SERIE</label>
+                            <input readonly="" type="text" name="numeroserie" class="form-control text-center" value="${nserie}" style="font-weight: bold;font-size: 18px">
+                        </div>                      
+                        <br>
                         <table class="table table-hover">
-                            <tr>
-                                <th> Nro</th>
-                                <th> Codigo</th>
-                                <th> Descripcion</th>
-                                <th> Precio</th>
-                                <th> cantidad</th>
-                                <th> Sub total</th>
-                                <th> Acciones</th>
-                            </tr>
+                            <thead>
+                                <tr class="text-center">
+                                    <th>N°</th>
+                                    <th>ID</th>
+                                    <th>PRODUCTO</th>
+                                    <th>PRECIO</th>
+                                    <th>CANTIDAD</th>
+                                    <th>SUBTOTAL</th>                                    
+                                    <th class="accion">ACCION</th>                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="list" items="${lista}">
+                                    <tr class="text-center">
+                                        <td>${list.getItem()}</td>
+                                        <td>${list.getIdproducto()}</td>
+                                        <td>${list.getDescripcionP()}</td>
+                                        <td>${list.getPrecio()}</td>
+                                        <td>${list.getCantidad()}</td>
+                                        <td>${list.getSubtotal()}</td>
+                                        <td class="d-flex">
+                                            <a href="#" class="btn btn-warning">Editar</a>
+                                            <a href="#" class="btn btn-danger" style="margin-left: 5px">Delete</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+
+                            </tbody>
                         </table>
-
-
                     </div>
-                    <div class="card-footer">
-                        <input type="submit" value="Generar venta" class="btn btn-success">
-                        <input type="submit" value="Eliminar" class="btn btn-danger">
+                    <div class="card-footer" >
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a href="Controlador?menu=NuevaVenta&accion=GenerarVenta" onclick="print()" class="btn btn-success">Generar Venta</a>
+                                <input type="submit" name="accion" value="Cancelar" class="btn btn-danger">
+                            </div>
+                            <div class="col-sm-6 ml-auto d-flex">                                
+                                <label class=" col-sm-6 text-right mt-2">Total a Pagar</label>                                                       
+                                <input type="text" name="txtTotal" value="S/.${totalpagar}0" class="form-control text-center font-weight-bold" style="font-size: 18px;">
+                            </div>
+                        </div>                        
                     </div>
-
-
-                </div> 
+                </div>
 
             </div>
         </div>
 
 
-
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </body>
 </html>
