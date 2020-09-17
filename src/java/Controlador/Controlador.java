@@ -12,6 +12,8 @@ import Modelo.EmpleadoDAO;
 import Modelo.Producto;
 import Modelo.ProductoDAO;
 import Modelo.Venta;
+import Modelo.VentaDAO;
+import config.GenerarSerie;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Integer.parseInt;
@@ -37,6 +39,7 @@ public class Controlador extends HttpServlet {
     Producto pro = new Producto();
     ProductoDAO pdao = new ProductoDAO();
     Venta v = new Venta();
+    VentaDAO vdao = new VentaDAO();
 
     int ide;
     int idc;
@@ -48,7 +51,7 @@ public class Controlador extends HttpServlet {
     Double subtotal;
     int cant;
     double totalPagar;
-    String numeroserie = "";
+    String numeroserie ="";
 
     List<Venta> lista = new ArrayList<>();
 
@@ -130,21 +133,24 @@ public class Controlador extends HttpServlet {
                     String dni = request.getParameter("codigocliente");
                     cli.setDni(dni);
                     cli = clidao.buscar(dni);
-                    request.setAttribute("cli", cli);// el controlador recibe  el cliente
+                    request.setAttribute("cli", cli);// el controlador captura  el cliente
                     break;
                 case "BuscarProducto":
                     int id = Integer.parseInt(request.getParameter("codigoproducto"));
                     pro = pdao.listarId(id);
 
                     request.setAttribute("pro", pro);
+                    request.setAttribute("cli", cli);
+                    request.setAttribute("totalpagar", totalPagar); // captamos el total a pagar
+                    request.setAttribute("lista", lista);
                     break;
                 case "Agregar":
-                          request.setAttribute("nserie", numeroserie);
+                    request.setAttribute("nserie", numeroserie);
                     request.setAttribute("cli", cli);
                     totalPagar = 0.0;
                     item = item + 1;
                     cod = pro.getId();
-                    descripcion = request.getParameter("nomproducto");
+                    descripcion = request.getParameter("nombreproducto");
                     precio = Double.parseDouble(request.getParameter("precio"));
                     cant = Integer.parseInt(request.getParameter("cant"));
                     subtotal = precio * cant;
@@ -159,9 +165,22 @@ public class Controlador extends HttpServlet {
                     for (int i = 0; i < lista.size(); i++) {
                         totalPagar = totalPagar + lista.get(i).getSubtotal();
                     }
-                    request.setAttribute("totalpagar", totalPagar);
-                    request.setAttribute("lista", lista);                    
+                    request.setAttribute("totalpagar", totalPagar); // captamos el total a pagar
+                    request.setAttribute("lista", lista);  // captamos la lista 
                     break;
+                default:
+                    numeroserie = vdao.GenerarSerie();
+                    if (numeroserie == null) {
+                        numeroserie = "000000001";
+                        request.setAttribute("nserie", numeroserie);
+                    } else {
+                        int incrementar = Integer.parseInt(numeroserie);
+                        GenerarSerie gs = new GenerarSerie();
+                        numeroserie = gs.NumeroSerie(incrementar);
+                        request.setAttribute("nserie", numeroserie);
+                    }
+                    request.getRequestDispatcher("RegistroDeVentas.jsp").forward(request, response);
+                      
             }
             request.getRequestDispatcher("RegistroDeVentas.jsp").forward(request, response);
 

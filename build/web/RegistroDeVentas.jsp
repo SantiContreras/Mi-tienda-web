@@ -27,11 +27,11 @@
                             </div>
                             <div class="form-group d-flex">
                                 <div class="col-sm-6 d-flex">
-                                    <input type="text" name="codigocliente" value="${c.getDni()}" class="form-control" placeholder="Codigo">
+                                    <input type="text" name="codigocliente" value="${cli.getDni()}" class="form-control" placeholder="Codigo">
                                     <button type="submit" name="accion" value="BuscarCliente" class="btn btn-outline-info">Buscar</button>
                                 </div>                           
                                 <div class="col-sm-6">
-                                    <input type="text" name="nombrescliente" value="${c.getNom()}" placeholder="Datos Cliente" class="form-control">
+                                    <input type="text" name="nombrescliente" value="${cli.getNom()}" placeholder="Datos Cliente" class="form-control">
                                 </div>                           
                             </div>
                             <!--DATOS DEL PRODUCTO-->
@@ -44,7 +44,7 @@
                                     <button type="submit" name="accion" value="BuscarProducto" class="btn btn-outline-info">Buscar</button>
                                 </div>                           
                                 <div class="col-sm-6">
-                                    <input type="text" name="nomproducto" value="${pro.getNom()}" placeholder="Datos Producto" class="form-control">
+                                    <input type="text" name="nombreproducto" value="${pro.getNom()}" placeholder="Datos Producto" class="form-control">
                                 </div>  
                             </div>
                             <div class="form-group d-flex">
@@ -115,7 +115,7 @@
                             </div>
                             <div class="col-sm-6 ml-auto d-flex">                                
                                 <label class=" col-sm-6 text-right mt-2">Total a Pagar</label>                                                       
-                                <input type="text" name="txtTotal" value="S/.${totalpagar}0" class="form-control text-center font-weight-bold" style="font-size: 18px;">
+                                <input type="text" name="txtTotal" value="${totalpagar}0" class="form-control text-center font-weight-bold" style="font-size: 18px;">
                             </div>
                         </div>                        
                     </div>
