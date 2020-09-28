@@ -145,7 +145,7 @@ public class Controlador extends HttpServlet {
                     request.setAttribute("lista", lista);
                     break;
                 case "Agregar":
-                    request.setAttribute("nserie", numeroserie);
+                   
                     request.setAttribute("cli", cli);
                     totalPagar = 0.0;
                     item = item + 1;
@@ -166,12 +166,39 @@ public class Controlador extends HttpServlet {
                         totalPagar = totalPagar + lista.get(i).getSubtotal();
                     }
                     request.setAttribute("totalpagar", totalPagar); // captamos el total a pagar
-                    request.setAttribute("lista", lista);  // captamos la lista 
+                    request.setAttribute("lista", lista);  // captamos la lista
+                     request.setAttribute("nserie", numeroserie);
+                    break;
+                case "GenerarVenta":
+                 //Guardar Venta
+                    v.setIdcliente(cli.getId());
+                    v.setIdempleado(2);
+                    v.setNumserie(numeroserie);
+                    v.setFecha("2019-06-14");
+                    v.setMonto(totalPagar);
+                    v.setEstado("1");
+                    vdao.guardarVenta(v);
+                    //Guardar Detalle ventas
+                    int idv=Integer.parseInt(vdao.IdVentas());
+                    for (int i = 0; i < lista.size(); i++) {
+                        v=new Venta();
+                        v.setId(idv);
+                        v.setIdproducto(lista.get(i).getIdproducto());
+                        v.setCantidad(lista.get(i).getCantidad());
+                        v.setPrecio(lista.get(i).getPrecio());
+                        vdao.guardarDetalleventas(v);
+                    }
+                    lista=new ArrayList<>();
+                    
                     break;
                 default:
+                    v = new Venta();
+                    lista = new ArrayList<>();
+                    item = 0;
+                    totalPagar = 0.0;                    
                     numeroserie = vdao.GenerarSerie();
                     if (numeroserie == null) {
-                        numeroserie = "000000001";
+                        numeroserie = "000000001";                        
                         request.setAttribute("nserie", numeroserie);
                     } else {
                         int incrementar = Integer.parseInt(numeroserie);

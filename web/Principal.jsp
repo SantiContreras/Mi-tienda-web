@@ -14,29 +14,29 @@
 
         <!-- Nuestro css-->
         <link rel="stylesheet" type="text/css" href="" th:href="@{/css/index.css}">
-        <title>JSP Page</title>
+        <title>Sistema de ventas web</title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-info" >
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark" >
 
 
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto" >
                     <li class="nav-item">
-                        <a style="margin-left: 10px; border: none; color: white"  class="btn btn-outline-dark" href="Controlador?nemu=Principal">home </a>
+                        <a style="margin-left: 10px; border: none; color: white"  class="btn btn-outline-warning" href="Controlador?nemu=Principal">home </a>
                     </li>
                     <li class="nav-item">
-                        <a  style="margin-left: 10px; border: none; color: white" class="btn btn-outline-dark"href="Controlador?menu=Cliente" target="myframe">cliente</a>
+                        <a  style="margin-left: 10px; border: none; color: white" class="btn btn-outline-warning"href="Controlador?menu=Cliente" target="myframe">cliente</a>
                     </li>
                     <li class="nav-item">
-                        <a style="margin-left: 10px; border: none; color: white"class="btn btn-outline-dark" href="Controlador?menu=Producto" target="myframe">Producto</a>
+                        <a style="margin-left: 10px; border: none; color: white"class="btn btn-outline-warning" href="Controlador?menu=Producto" target="myframe">Producto</a>
                     </li>
                     <li class="nav-item">
-                        <a style="margin-left: 10px; border: none ;color: white"class="btn btn-outline-dark" href="Controlador?menu=Empleado&accion=Listar" target="myframe">Empleado</a>
+                        <a style="margin-left: 10px; border: none ;color: white"class="btn btn-outline-warning" href="Controlador?menu=Empleado&accion=Listar" target="myframe">Empleado</a>
                     </li>
                     <li class="nav-item">
-                        <a style="margin-left: 10px; border: none; color: white" class="btn btn-outline-dark" href="Controlador?menu=NuevaVenta&accion=default" target="myframe">Nueva venta</a>
+                        <a style="margin-left: 10px; border: none; color: white" class="btn btn-outline-warning" href="Controlador?menu=NuevaVenta&accion=default" target="myframe">Nueva venta</a>
                     </li>
 
 

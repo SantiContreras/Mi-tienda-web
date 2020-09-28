@@ -18,7 +18,7 @@
     <body>
         <div class="d-flex">
             <div class="col-lg-5 parte01">
-                <div class="card">
+                <div class="card" >
                     <form action="Controlador?menu=NuevaVenta" method="POST">
                         <div class="card-body">
                             <!--DATOS DEL PRODUCTO-->
@@ -76,7 +76,7 @@
                             <input readonly="" type="text" name="numeroserie" class="form-control text-center" value="${nserie}" style="font-weight: bold;font-size: 18px">
                         </div>                      
                         <br>
-                        <table class="table table-hover">
+                        <table class="table table-hover table-dark">
                             <thead>
                                 <tr class="text-center">
                                     <th>N°</th>
@@ -110,7 +110,7 @@
                     <div class="card-footer" >
                         <div class="row">
                             <div class="col-sm-6">
-                                <a href="Controlador?menu=NuevaVenta&accion=GenerarVenta" onclick="print()" class="btn btn-success">Generar Venta</a>
+                                <a href="Controlador?menu=NuevaVenta&accion=GenerarVenta"  class="btn btn-success">Generar Venta</a>
                                 <input type="submit" name="accion" value="Cancelar" class="btn btn-danger">
                             </div>
                             <div class="col-sm-6 ml-auto d-flex">                                
