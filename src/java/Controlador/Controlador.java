@@ -51,7 +51,7 @@ public class Controlador extends HttpServlet {
     Double subtotal;
     int cant;
     double totalPagar;
-    String numeroserie ="";
+    String numeroserie = "";
 
     List<Venta> lista = new ArrayList<>();
 
@@ -145,69 +145,84 @@ public class Controlador extends HttpServlet {
                     request.setAttribute("lista", lista);
                     break;
                 case "Agregar":
-                   
+
                     request.setAttribute("cli", cli);
                     totalPagar = 0.0;
                     item = item + 1;
                     cod = pro.getId();
-                    descripcion = request.getParameter("nombreproducto");
-                    precio = Double.parseDouble(request.getParameter("precio"));
-                    cant = Integer.parseInt(request.getParameter("cant"));
+                    descripcion = request.getParameter("nombreproducto"); // nombre del producto capturado en la vista
+                    precio = Double.parseDouble(request.getParameter("precio"));// precio caoturado en la vista
+                    cant = Integer.parseInt(request.getParameter("cant")); // cantidad capturado en la vista
                     subtotal = precio * cant;
-                    v = new Venta();
+                    v = new Venta(); // instacio un nueva venta para agregar a la lista
                     v.setItem(item);
                     v.setIdproducto(cod);
                     v.setDescripcionP(descripcion);
                     v.setPrecio(precio);
                     v.setCantidad(cant);
                     v.setSubtotal(subtotal);
-                    lista.add(v);
-                    for (int i = 0; i < lista.size(); i++) {
+                    lista.add(v); // agregamos a la coleccion
+                    for (int i = 0; i < lista.size(); i++) {  // recorremos la lista para salar los totales a pagar
                         totalPagar = totalPagar + lista.get(i).getSubtotal();
                     }
                     request.setAttribute("totalpagar", totalPagar); // captamos el total a pagar
                     request.setAttribute("lista", lista);  // captamos la lista
-                     request.setAttribute("nserie", numeroserie);
+                    request.setAttribute("nserie", numeroserie); //captamos el numero de serie
                     break;
                 case "GenerarVenta":
-                 //Guardar Venta
-                    v.setIdcliente(cli.getId());
-                    v.setIdempleado(2);
-                    v.setNumserie(numeroserie);
-                    v.setFecha("2019-06-14");
+                    //Guardar Venta
+
+                    v.setIdcliente(cli.getId()); // guardamos el id cliente
+                    v.setIdempleado(2);  // guardamos el id empleado que atendio la venta
+                    v.setNumserie(numeroserie); // guardamos el numero de serie
+                    v.setFecha("2019-06-14"); // 
                     v.setMonto(totalPagar);
                     v.setEstado("1");
                     vdao.guardarVenta(v);
                     //Guardar Detalle ventas
-                    int idv=Integer.parseInt(vdao.IdVentas());
-                    for (int i = 0; i < lista.size(); i++) {
-                        v=new Venta();
+                    int idv = Integer.parseInt(vdao.IdVentas());
+                    for (int i = 0; i < lista.size(); i++) { //recorremos la lista para almacenar en el detalle de venta
+                        v = new Venta();
                         v.setId(idv);
                         v.setIdproducto(lista.get(i).getIdproducto());
                         v.setCantidad(lista.get(i).getCantidad());
                         v.setPrecio(lista.get(i).getPrecio());
                         vdao.guardarDetalleventas(v);
                     }
-                    lista=new ArrayList<>();
-                    
+                    //actualiza el stock de productos
+                    for( int i = 0; i < lista.size();i++){
+                        Producto pr = new Producto();  // intanciamos el objeto producto
+                        int cantidad = lista.get(i).getCantidad() ;  // obtenemos la cantidad del producto que se selecciono de la lista antes de generar la factura
+                        int idproducto = lista.get(i).getIdproducto(); //obtenemos el id del producto a actualizar
+                        ProductoDAO AO = new ProductoDAO(); // instanciamos la clase producto dao que contiene los metodos
+                        pr=AO.buscar(idproducto); // buscamos el id de producto
+                        int sac = pr.getStock() - cantidad; // restamos la cantidad actual con la cantidad que se va a comprar
+                        AO.actualizarstock(idproducto, sac); // actualizamos el stock
+                        
+                        
+                        
+                    }
+                    lista = new ArrayList<>(); // creamos una nueva lista para desponer la lista anterior.
+
                     break;
                 default:
                     v = new Venta();
                     lista = new ArrayList<>();
                     item = 0;
-                    totalPagar = 0.0;                    
+                    totalPagar = 0.0;
                     numeroserie = vdao.GenerarSerie();
                     if (numeroserie == null) {
-                        numeroserie = "000000001";                        
+                        numeroserie = "000000001";
                         request.setAttribute("nserie", numeroserie);
                     } else {
                         int incrementar = Integer.parseInt(numeroserie);
                         GenerarSerie gs = new GenerarSerie();
                         numeroserie = gs.NumeroSerie(incrementar);
+
                         request.setAttribute("nserie", numeroserie);
                     }
                     request.getRequestDispatcher("RegistroDeVentas.jsp").forward(request, response);
-                      
+
             }
             request.getRequestDispatcher("RegistroDeVentas.jsp").forward(request, response);
 

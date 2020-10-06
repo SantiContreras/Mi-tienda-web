@@ -25,13 +25,13 @@ public class VentaDAO {
 
      public String GenerarSerie(){
         String numeroserie="";
-        String sql="select max(NumeroSerie) from ventas";
+        String sql="select max(NumeroSerie) from ventas"; // devuelve una columna de la tabla ventas con el numero maximo
         try {
             con=cn.Conexion();
             ps=con.prepareStatement(sql);
             rs=ps.executeQuery();
             while (rs.next()) {
-                numeroserie=rs.getString(1);
+                numeroserie=rs.getString(1);   // almacenamos el valor de la consulta
             }
         } catch (Exception e) {
         }

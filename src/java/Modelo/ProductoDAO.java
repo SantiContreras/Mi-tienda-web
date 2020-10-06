@@ -22,9 +22,10 @@ public class ProductoDAO {
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
+    int r;
 
     public Producto buscar(int id) {
-        Producto pro = new Producto();
+        Producto pro = new Producto(); // instaciamos para almacenar aca la busqueda del producto
         String sql = "select * from producto where idproducto=" + id;
         try {
             con = cn.Conexion();
@@ -62,5 +63,20 @@ public class ProductoDAO {
         }
         return pr;
     }
+    
+    public int actualizarstock( int id , int stock) {
+     String sql="update producto set Stock=? where idproducto=?";
+     try{
+         con=cn.Conexion();
+         ps=con.prepareStatement(sql);
+         ps.setInt(1, stock);
+         ps.setInt(2, id);
+         ps.executeUpdate();
+     }
+     catch(SQLException e){
+     }
+        return r;
+    }
+    
 
 }
