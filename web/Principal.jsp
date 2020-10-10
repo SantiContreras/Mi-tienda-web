@@ -27,7 +27,7 @@
                         <a style="margin-left: 10px; border: none; color: white"  class="btn btn-outline-warning" href="Controlador?nemu=Principal">home </a>
                     </li>
                     <li class="nav-item">
-                        <a  style="margin-left: 10px; border: none; color: white" class="btn btn-outline-warning"href="Controlador?menu=Cliente" target="myframe">cliente</a>
+                        <a  style="margin-left: 10px; border: none; color: white" class="btn btn-outline-warning"href="Controlador?menu=Cliente&accion=Listar" target="myframe">cliente</a>
                     </li>
                     <li class="nav-item">
                         <a style="margin-left: 10px; border: none; color: white"class="btn btn-outline-warning" href="Controlador?menu=Producto" target="myframe">Producto</a>

@@ -50,25 +50,23 @@ public class ClienteDAO {
     //Operaciones 
     
     public List listar(){
-        String sql = "select * from cliente";
-        ArrayList<Cliente> Lista = new ArrayList<>();
-        
-        try{
+        String sql="select * from cliente";
+        List<Cliente>lista=new ArrayList<>();
+        try {
             con=cn.Conexion();
             ps=con.prepareStatement(sql);
             rs=ps.executeQuery();
-            while(rs.next()){
-                Cliente cli1 = new Cliente();
-                cli1.setId(rs.getInt(1));
-                cli1.setDni(rs.getString(2));
-                cli1.setNom(rs.getString(3));
-                cli1.setDir(rs.getString(4));
-                cli1.setEs(rs.getString(5));
-                Lista.add(cli1);
+            while (rs.next()) {
+                Cliente cl=new Cliente();
+                cl.setId(rs.getInt(1));
+                cl.setDni(rs.getString(2));
+                cl.setNom(rs.getString(3));
+                cl.setDir(rs.getString(4));
+                cl.setEs(rs.getString(5));               
+                lista.add(cl);
             }
+        } catch (Exception e) {
         }
-        catch( SQLException e){
-        }
-        return Lista;
+        return lista;
     }
 }

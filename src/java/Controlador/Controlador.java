@@ -232,6 +232,13 @@ public class Controlador extends HttpServlet {
 
         }
         if (menu.equals("Cliente")) {
+            
+            switch(accion){
+                case "Listar":
+                    List lista = clidao.listar();
+                    request.setAttribute("clientes", lista);
+                    break;
+            }
             request.getRequestDispatcher("Clientes.jsp").forward(request, response);
 
         }

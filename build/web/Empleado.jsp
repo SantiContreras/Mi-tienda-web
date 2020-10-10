@@ -10,6 +10,7 @@
     <body> 
        
         <div class="d-flex">
+           <!-- Esta es la columna de los campos para completas-->
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
@@ -39,11 +40,13 @@
                         </form>
                     </div>                         
                 </div>
-            </div>                     
+            </div>   
+                            
+             <!--Esta es la columna de los registros completados -->
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-hover">
+                        <table class="table table-hover table-dark">
                             <thead>
                                 <tr>
                                     <th>ID</th>
