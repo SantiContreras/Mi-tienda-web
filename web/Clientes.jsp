@@ -31,19 +31,19 @@
                         <form action="Controlador?menu=Cliente" method="POST">
                             <div class="form-group">
                                 <label>Dni:</label>
-                                <input type="text" name="txtDni" class="form-control">
+                                <input type="text"  value="${cliente.getDni()}" name="txtDni" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Nombres:</label>
-                                <input type="text" name="txtNombre"class="form-control">
+                                <input type="text" value="${cliente.getNom()}" name="txtNombre"class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Direccion:</label>
-                                <input type="text" name="txtDir"class="form-control">
+                                <input type="text" value="${cliente.getDir()}" name="txtDir"class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Estado:</label>
-                                <input type="text" name="txtEstado"class="form-control">
+                                <input type="text" value="${cliente.getEs()}" name="txtEstado"class="form-control">
                             </div>
                             <input type="submit"  name="accion" value="Agregar" class="btn btn-success">
                             <input type="submit"  name="accion" value="Actualizar" class="btn btn-warning">
@@ -79,7 +79,7 @@
                                         <td>${em.getEs()}</td>
                                         <td>
                                             <a class="btn btn-warning" href="Controlador?menu=Cliente&accion=Editar&id=${em.getId()}">Editar</a>
-                                            <a class="btn btn-danger" href="Controlador?menu=Cliente&accion=Delete&id=${em.getId()}">Delete</a>
+                                            <a class="btn btn-danger" href="Controlador?menu=Cliente&accion=Eliminar&id=${em.getId()}">Delete</a>
                                         </td>
                                     </tr>
 

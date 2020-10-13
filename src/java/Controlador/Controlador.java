@@ -190,17 +190,15 @@ public class Controlador extends HttpServlet {
                         vdao.guardarDetalleventas(v);
                     }
                     //actualiza el stock de productos
-                    for( int i = 0; i < lista.size();i++){
+                    for (int i = 0; i < lista.size(); i++) {
                         Producto pr = new Producto();  // intanciamos el objeto producto
-                        int cantidad = lista.get(i).getCantidad() ;  // obtenemos la cantidad del producto que se selecciono de la lista antes de generar la factura
+                        int cantidad = lista.get(i).getCantidad();  // obtenemos la cantidad del producto que se selecciono de la lista antes de generar la factura
                         int idproducto = lista.get(i).getIdproducto(); //obtenemos el id del producto a actualizar
                         ProductoDAO AO = new ProductoDAO(); // instanciamos la clase producto dao que contiene los metodos
-                        pr=AO.buscar(idproducto); // buscamos el id de producto
+                        pr = AO.buscar(idproducto); // buscamos el id de producto
                         int sac = pr.getStock() - cantidad; // restamos la cantidad actual con la cantidad que se va a comprar
                         AO.actualizarstock(idproducto, sac); // actualizamos el stock
-                        
-                        
-                        
+
                     }
                     lista = new ArrayList<>(); // creamos una nueva lista para desponer la lista anterior.
 
@@ -232,12 +230,49 @@ public class Controlador extends HttpServlet {
 
         }
         if (menu.equals("Cliente")) {
-            
-            switch(accion){
+
+            switch (accion) {
                 case "Listar":
                     List lista = clidao.listar();
                     request.setAttribute("clientes", lista);
                     break;
+                case "Agregar":
+                    String dni = request.getParameter("txtDni");
+                    String nombre = request.getParameter("txtNombre");
+                    String dir = request.getParameter("txtDir");
+                    String estado = request.getParameter("txtEstado");
+                    cli.setDni(dni);
+                    cli.setNom(nombre);
+                    cli.setDir(dir);
+                    cli.setEs(estado);
+                    clidao.Agregar(cli);
+                    request.getRequestDispatcher("Controlador?menu=Cliente&accion=Listar").forward(request, response);
+                    break;
+
+                case "Eliminar":
+                    idc = Integer.parseInt(request.getParameter("id"));
+                    clidao.Eliminar(idc);
+                    request.getRequestDispatcher("Controlador?menu=Cliente&accion=Listar").forward(request, response);
+                    break;
+                case "Actualizar" :
+                    String dni1 = request.getParameter("txtDni");
+                    String nombre1 = request.getParameter("txtNombre");
+                    String dir1 = request.getParameter("txtDir");
+                    String estado1 = request.getParameter("txtEstado");
+                    cli.setDni(dni1);
+                    cli.setNom(nombre1);
+                    cli.setDir(dir1);
+                    cli.setEs(estado1);
+                    clidao.Agregar(cli);
+                    request.getRequestDispatcher("Controlador?menu=Cliente&accion=Listar").forward(request, response);
+                    break;
+                     case "Editar":
+                    idc = Integer.parseInt(request.getParameter("id"));
+                    Cliente cl = clidao.listarId(idc);
+                    request.setAttribute("cliente", cl);
+                    request.getRequestDispatcher("Controlador?menu=Cliente&accion=Listar").forward(request, response);
+                    break;
+                   
             }
             request.getRequestDispatcher("Clientes.jsp").forward(request, response);
 
